@@ -85,7 +85,9 @@ class ImageOptim
       # Getting version of bin, will fail for an unknown name
       def version_string
         case name
-        when :advpng, :gifsicle, :jpegoptim, :optipng
+        when :advpng
+          capture("#{escaped_path} --version 2> #{Path::NULL}")[/\d+(\.\d+)+/] || "2.1"
+        when :gifsicle, :jpegoptim, :optipng
           capture("#{escaped_path} --version 2> #{Path::NULL}")[/\d+(\.\d+)+/]
         when :svgo, :pngquant
           capture("#{escaped_path} --version 2>&1")[/\d+(\.\d+)+/]
